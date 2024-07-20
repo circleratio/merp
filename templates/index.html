@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if user.is_authenticated %}
+Merp: MyPage
+{% else %}
+Merp
+{% endif %}
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block header %}
+  <li class="nav-item"><a href="/approval/" class="nav-link">Approval</a></li>
+  <li class="nav-item"><a href="#" class="nav-link">Project</a></li>
+  <li class="nav-item"><a href="#" class="nav-link">Management Plan</a></li>
+  <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+{% endblock %}
+
+{% block contents %}
+<div class="h2">Welcome {{ user.username }}</div>
+{% endblock %}
