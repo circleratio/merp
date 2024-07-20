@@ -1,5 +1,8 @@
 db.sqlite3
-account/__pycache__
+account/__pycache__/
 account/migrations/0001_initial.py
 account/migrations/__pycache__/
+approval/__pycache__/
+approval/migrations/__pycache__/
+approval/migrations/0001_initial.py
 merp/__pycache__/
