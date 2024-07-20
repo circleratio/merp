@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Approval Details
+{% endblock %}
+
+{% block header %}
+  <li class="nav-item"><a href="/approval/" class="nav-link">Approval</a></li>
+  <li class="nav-item"><a href="#" class="nav-link">Project</a></li>
+  <li class="nav-item"><a href="#" class="nav-link">Management Plan</a></li>
+  <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+{% endblock %}
+
+{% block contents %}
+{% if workflow %}
+  <table class="table table-striped">
+    <tr><td>申請者</td><td>{{ workflow.originator }}</td></tr>
+    <tr><td>案件名</td><td>{{ workflow.title }}</td></tr>
+    <tr><td>種別</td><td>{{ workflow.flow_type }}</td></tr>
+    <tr><td>申請日</td><td>{{ workflow.originate_date }}</td></tr>
+    <tr><td>現在の承認者</td><td>{{ workflow.owner }}</td></tr>
+    <tr><td>承認フロー</td><td>{{ workflow.approvers }}</td></tr>
+    <tr><td>参考配布先</td><td>{{ workflow.observers }}</td></tr>
+    <tr><td>承認履歴</td><td>{{ workflow.history }}</td></tr>
+    <tr><td>ステータス</td><td>{{ workflow.status }}</td></tr>
+  </table>
+  {% if workflow.status == "run" %}
+  <form method="post" action="/approval/withdraw/{{ workflow.id }}/">
+    {% csrf_token %}
+    <button class="btn btn-secondary" type="submit">引き戻し</button>
+  </form>
+  {% endif %}
+  {% if workflow.status == "withdrawn" %}
+  <form method="post" action="/approval/dispose/{{ workflow.id }}/">
+    {% csrf_token %}
+    <button class="btn btn-secondary" type="submit">破棄</button>
+  </form>
+  {% endif %}
+{% else %}
+  <p>No workflow is available.</p>
+{% endif %}
+{% endblock %}
