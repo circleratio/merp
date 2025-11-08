@@ -1,7 +1,7 @@
 import sqlite3
 import json
-import util
-from merp_logger import set_logger, getLogger
+import merp
+from merp_logger import getLogger
 
 logger = getLogger(__name__)
 
@@ -15,21 +15,23 @@ cur.execute('CREATE TABLE departments(id INTEGER PRIMARY KEY AUTOINCREMENT, name
 cur.execute('CREATE TABLE approvers(id INTEGER PRIMARY KEY AUTOINCREMENT, name STRING, person INTEGER, department INTEGER)')
 cur.execute('CREATE TABLE assignments(id INTEGER PRIMARY KEY AUTOINCREMENT, person INTEGER, department INTEGER)')
 
-with open('data/persons.json', 'r', encoding='utf-8') as f:
-    js = json.load(f)
-    util.import_persons(conn, js)
-        
-with open('data/departments.json', 'r', encoding='utf-8') as f:
-    js = json.load(f)
-    util.import_departments(conn, js)
+merp = merp.Merp('merp.db')
 
 with open('data/persons.json', 'r', encoding='utf-8') as f:
     js = json.load(f)
-    util.import_assignment(conn, js)
+    merp.import_persons(js)
+        
+with open('data/departments.json', 'r', encoding='utf-8') as f:
+    js = json.load(f)
+    merp.import_departments(js)
+
+with open('data/persons.json', 'r', encoding='utf-8') as f:
+    js = json.load(f)
+    merp.import_assignment(js)
     
 with open('data/persons.json', 'r', encoding='utf-8') as f:
     js = json.load(f)
-    util.import_approvers(conn, js)
+    merp.import_approvers(js)
     
 conn.commit()
 conn.close()
